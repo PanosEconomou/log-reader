@@ -49,6 +49,7 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        tag_name: $TAG_NAME
         files: |
           dist/serial_to_csv  # Linux
           dist/serial_to_csv.exe  # Windows
