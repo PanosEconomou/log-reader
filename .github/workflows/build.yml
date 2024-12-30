@@ -37,6 +37,13 @@ jobs:
       run: |
         pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
 
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Create a tag for this commit
       run: |
         TAG_NAME="v$(date +'%Y%m%d%H%M%S')"
