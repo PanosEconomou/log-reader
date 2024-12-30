@@ -42,6 +42,7 @@ jobs:
         TAG_NAME="v$(date +'%Y%m%d%H%M%S')"
         git tag $TAG_NAME
         git push origin $TAG_NAME
+        echo "::set-output name=tag_name::$TAG_NAME"
 
     - name: Create a Release
       uses: actions/create-release@v1
