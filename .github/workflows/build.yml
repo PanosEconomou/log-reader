@@ -12,6 +12,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        architecture: [x86_64, arm64]
+        exclude:  # Exclude unsupported combinations
+          - os: ubuntu-latest
+            architecture: arm64
+          - os: windows-latest
+            architecture: arm64
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -34,30 +40,43 @@ jobs:
 
     - name: Build executable
       run: |
-        pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
+        if [ "${{ matrix.os }}" == "macos-latest" ]; then
+          pyinstaller --onefile --arch ${{ matrix.architecture }} your_script.py
+        elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+          pyinstaller --onefile your_script.py
+        else
+          pyinstaller --onefile your_script.py
+        fi
+        
     - name: Check if executable exists
       run: ls -l dist/
 
-    - name: Upload Windows executable to GitHub Release
-      if: matrix.os == 'windows-latest'
+    - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: windows-executable
-        path: dist/serial_to_csv.exe
+        name: ${{ matrix.os }}-${{ matrix.architecture }}-executable
+        path: dist/*
 
-    - name: Upload Mac executable to GitHub Release
-      if: matrix.os == 'macos-latest'
-      uses: actions/upload-artifact@v3
-      with:
-        name: macos-executable
-        path: dist/serial_to_csv
+    # - name: Upload Windows executable to GitHub Release
+    #   if: matrix.os == 'windows-latest'
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: windows-executable
+    #     path: dist/serial_to_csv.exe
 
-    - name: Upload Linux executable to GitHub Release
-      if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v3
-      with:
-        name: linux-executable
-        path: dist/serial_to_csv
+    # - name: Upload Mac executable to GitHub Release
+    #   if: matrix.os == 'macos-latest'
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: macos-executable
+    #     path: dist/serial_to_csv
+
+    # - name: Upload Linux executable to GitHub Release
+    #   if: matrix.os == 'ubuntu-latest'
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: linux-executable
+    #     path: dist/serial_to_csv
 
 
   release:
@@ -89,19 +108,25 @@ jobs:
     - name: Download Windows executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: windows-executable
+        name: windows-x86_64-executable
         path: windows
 
     - name: Download Mac executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: macos-executable
-        path: macos
+        name: macos-x86_64-executable
+        path: macos-x86_64
+
+    - name: Download Mac executable artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: macos-x86_64-executable
+        path: macos-arm64
 
     - name: Download Linux executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: linux-executable
+        name: linux-x86_64-executable
         path: linux
 
     - name: List the directory
@@ -132,7 +157,17 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./macos/serial_to_csv  # Path to the macOS executable
+        asset_path: ./macos-x86_64/serial_to_csv  # Path to the macOS executable
+        asset_name: serial_to_csv-macos  # Name of the asset
+        asset_content_type: application/octet-stream
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload macOS executable to GitHub Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./macos-arm64/serial_to_csv  # Path to the macOS executable
         asset_name: serial_to_csv-macos  # Name of the asset
         asset_content_type: application/octet-stream
       env:
