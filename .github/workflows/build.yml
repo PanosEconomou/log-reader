@@ -41,21 +41,21 @@ jobs:
 
     - name: Upload Windows executable to GitHub Release
       if: matrix.os == 'windows-latest'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: windows-executable
         path: dist/serial_to_csv.exe
 
     - name: Upload Mac executable to GitHub Release
       if: matrix.os == 'macos-latest'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: mac-executable
         path: dist/serial_to_csv
 
     - name: Upload Linux executable to GitHub Release
       if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: linux-executable
         path: dist/serial_to_csv
