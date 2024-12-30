@@ -51,7 +51,7 @@ jobs:
       with:
         tag_name: "$TAG_NAME"
         release_name: "Logger"
-        release_body: "Compiled executables"
+        body: "Compiled executables"
         draft: false
         prerelease: false
 
