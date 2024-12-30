@@ -134,7 +134,7 @@ jobs:
     - name: Download Linux executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: linux-latest-x86_64-executable
+        name: ubuntu-latest-x86_64-executable
         path: linux
 
     - name: List the directory
