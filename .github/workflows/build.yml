@@ -62,11 +62,15 @@ jobs:
     - name: Set permissions
       run: chmod +x dist/*
 
+    - name: Compress
+      run: |
+        zip -r ${{ matrix.os }}-${{ matrix.architecture }}.zip dist
+        
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.os }}-${{ matrix.architecture }}-executable
-        path: dist/*
+        path: ./${{ matrix.os }}-${{ matrix.architecture }}.zip
 
     # - name: Upload Windows executable to GitHub Release
     #   if: matrix.os == 'windows-latest'
@@ -148,7 +152,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./linux/serial_to_csv  # Path to the Linux executable
+        asset_path: ./linux/*  # Path to the Linux executable
         asset_name: serial_to_csv-linux  # Name of the asset
         asset_content_type: application/octet-stream
       env:
@@ -158,7 +162,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./windows/serial_to_csv.exe  # Path to the Windows executable
+        asset_path: ./windows/*  # Path to the Windows executable
         asset_name: serial_to_csv-windows.exe  # Name of the asset
         asset_content_type: application/octet-stream 
       env:
@@ -168,7 +172,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./macos-x86_64/serial_to_csv  # Path to the macOS executable
+        asset_path: ./macos-x86_64/*  # Path to the macOS executable
         asset_name: serial_to_csv-macos-x86_64  # Name of the asset
         asset_content_type: application/octet-stream
       env:
@@ -178,7 +182,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./macos-arm64/serial_to_csv  # Path to the macOS executable
+        asset_path: ./macos-arm64/*  # Path to the macOS executable
         asset_name: serial_to_csv-macos-arm64  # Name of the asset
         asset_content_type: application/octet-stream
       env:
