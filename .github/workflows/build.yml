@@ -41,12 +41,12 @@ jobs:
     - name: Build executable on Mac
       if: ${{ matrix.os == 'macos-latest' }}
       run: |
-          arch -${{ matrix.architecture }} pyinstaller --onefile -c --additional-hooks-dir=. serial_to_csv.py
+          pyinstaller --onefile --nowindow --target-arch=${{ matrix.architecture }} --additional-hooks-dir=. serial_to_csv.py
     
     - name: Build executable on Windows/Linux
       if: ${{ matrix.os != 'macos-latest' }}
       run: |
-        pyinstaller --onefile -c --additional-hooks-dir=. serial_to_csv.py
+        pyinstaller --onefile --nowindow --additional-hooks-dir=. serial_to_csv.py
         
     - name: Check if executable exists
       run: ls -l dist/
