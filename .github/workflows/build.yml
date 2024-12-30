@@ -38,13 +38,15 @@ jobs:
         echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
         echo "datas = copy_metadata('readchar')" >> hook-readchar.py
 
-    - name: Build executable
+    - name: Build executable on Mac
+      if: ${{ matrix.os == 'macos-latest' }}
       run: |
-        if [ "${{ matrix.os }}" == "macos-latest" ]; then
           arch -${{ matrix.architecture }} pyinstaller --onefile -c --additional-hooks-dir=. serial_to_csv.py
-        else
-          pyinstaller --onefile -c --additional-hooks-dir=. serial_to_csv.py
-        fi
+    
+    - name: Build executable on Windows/Linux
+      if: ${{ matrix.os != 'macos-latest' }}
+      run: |
+        pyinstaller --onefile -c --additional-hooks-dir=. serial_to_csv.py
         
     - name: Check if executable exists
       run: ls -l dist/
