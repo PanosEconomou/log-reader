@@ -37,6 +37,12 @@ jobs:
       run: |
         pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
 
+    - name: Create Git tag
+      run: |
+        TAG_NAME="v1.0.0"
+        git tag $TAG_NAME
+        git push origin $TAG_NAME
+
     - name: Upload executables as GitHub Release
       uses: softprops/action-gh-release@v1
       with:
