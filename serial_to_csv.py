@@ -62,6 +62,16 @@ def pick_output_location():
 
     return path
 
+# Pick baud rate
+def pick_baud_rate():
+    questions = [inquirer.List('baudrate',
+                               message="Επιλέξτε το baud rate",
+                               default=9600,
+                               choices=[4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600]
+        ),]
+    rate_selected = inquirer.prompt(questions)
+    return rate_selected['baudrate']
+
 # Χειρισμός σήματος διακοπής
 def signal_handler(sig, frame):
     print("\nΔιακοπή από τον χρήστη. Κλείσιμο σύνδεσης...")
@@ -74,9 +84,12 @@ if __name__ == "__main__":
     # Port selection
     port = pick_port()
 
+    # Baud rate selection
+    baudrate = pick_baud_rate();
+
     # Σύνδεση στη σειριακή θύρα
     try:
-        ser = serial.Serial(port.device, baudrate=9600, timeout=1)
+        ser = serial.Serial(port.device, baudrate=baudrate, timeout=1)
         print("Σύνδεση επιτυχής στη θύρα!")
     except Exception as e:
         print(f"Αδυναμία σύνδεσης στη θύρα! Λεπτομέρειες: {e}")
