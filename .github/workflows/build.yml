@@ -116,25 +116,25 @@ jobs:
     - name: Download Windows executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: windows-x86_64-executable
+        name: windows-latest-x86_64-executable
         path: windows
 
     - name: Download Mac executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: macos-x86_64-executable
+        name: macos-latest-x86_64-executable
         path: macos-x86_64
 
     - name: Download Mac executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: macos-x86_64-executable
+        name: macos-latest-x86_64-executable
         path: macos-arm64
 
     - name: Download Linux executable artifact
       uses: actions/download-artifact@v3
       with:
-        name: linux-x86_64-executable
+        name: linux-latest-x86_64-executable
         path: linux
 
     - name: List the directory
@@ -161,22 +161,22 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-    - name: Upload macOS executable to GitHub Release
+    - name: Upload macOS x86 executable to GitHub Release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./macos-x86_64/serial_to_csv  # Path to the macOS executable
-        asset_name: serial_to_csv-macos  # Name of the asset
+        asset_name: serial_to_csv-macos-x86_64  # Name of the asset
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Upload macOS executable to GitHub Release
+    - name: Upload macOS arm executable to GitHub Release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./macos-arm64/serial_to_csv  # Path to the macOS executable
-        asset_name: serial_to_csv-macos  # Name of the asset
+        asset_name: serial_to_csv-macos-arm64  # Name of the asset
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
