@@ -73,7 +73,9 @@ jobs:
         asset_path: dist/serial_to_csv.exe  # Path to the Windows executable
         asset_name: serial_to_csv-windows.exe  # Name of the asset
         asset_content_type: application/octet-stream 
-
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
     - name: Upload macOS executable to GitHub Release
       uses: actions/upload-release-asset@v1
       with:
@@ -81,6 +83,6 @@ jobs:
         asset_path: dist/serial_to_csv.app  # Path to the macOS executable
         asset_name: serial_to_csv-macos.app  # Name of the asset
         asset_content_type: application/octet-stream
-       env:
+      env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
