@@ -12,7 +12,6 @@ pyserial==3.5
 PyYAML==6.0.2
 readchar==4.2.1
 runs==1.2.2
-serial==0.0.97
 setuptools==75.6.0
 six==1.17.0
 wcwidth==0.2.13
