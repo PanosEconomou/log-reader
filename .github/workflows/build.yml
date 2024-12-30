@@ -60,13 +60,13 @@ jobs:
       run: ls -l dist/
 
     - name: Compress Normal
-      if: ${{ matrix.os != "windows-latest" }}
+      if: ${{ matrix.os != 'windows-latest' }}
       run: |
         chmod +x dist/*
         zip -r ${{ matrix.os }}-${{ matrix.architecture }}.zip dist
 
     - name: Compress Windows
-      if: ${{ matrix.os == "windows-latest" }}
+      if: ${{ matrix.os == 'windows-latest' }}
       run: Compress-Archive -Path "dist\*" -DestinationPath ${{ matrix.os }}-${{ matrix.architecture }}.zip
         
     - name: Upload Artifact
