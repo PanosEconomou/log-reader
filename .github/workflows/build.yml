@@ -7,96 +7,43 @@ on:
   pull_request:
 
 jobs:
-  build-linux:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # Replace with your Python version
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pyinstaller
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
 
-      - name: Create hook for readchar
-        run: |
-          echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
-          echo "datas = copy_metadata('readchar')" >> hook-readchar.py
+    - name: Create hook for readchar
+      run: |
+        echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
+        echo "datas = copy_metadata('readchar')" >> hook-readchar.py
 
-      - name: Build Linux executable
-        run: pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
+    - name: Build executable
+      run: |
+        pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-executable
-          path: dist/serial_to_csv
-
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pyinstaller
-
-      - name: Create hook for readchar
-        run: |
-          echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
-          echo "datas = copy_metadata('readchar')" >> hook-readchar.py
-
-      - name: Build Windows executable
-        run: pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: windows-executable
-          path: dist/serial_to_csv.exe
-
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pyinstaller
-
-      - name: Create hook for readchar
-        run: |
-          echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
-          echo "datas = copy_metadata('readchar')" >> hook-readchar.py
-
-      - name: Build macOS executable
-        run: pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: macos-executable
-          path: dist/serial_to_csv
+    - name: Upload executables as GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/serial_to_csv  # Linux
+          dist/serial_to_csv.exe  # Windows
+          dist/serial_to_csv.app  # macOS
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
