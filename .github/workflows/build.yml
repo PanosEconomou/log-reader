@@ -24,8 +24,13 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
+      - name: Create hook for readchar
+        run: |
+          echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
+          echo "datas = copy_metadata('readchar')" >> hook-readchar.py
+
       - name: Build Linux executable
-        run: pyinstaller --onefile serial_to_csv.py
+        run: pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -50,8 +55,13 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
+      - name: Create hook for readchar
+        run: |
+          echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
+          echo "datas = copy_metadata('readchar')" >> hook-readchar.py
+
       - name: Build Windows executable
-        run: pyinstaller --onefile serial_to_csv.py
+        run: pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -76,8 +86,13 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
+      - name: Create hook for readchar
+        run: |
+          echo "from PyInstaller.utils.hooks import copy_metadata" > hook-readchar.py
+          echo "datas = copy_metadata('readchar')" >> hook-readchar.py
+
       - name: Build macOS executable
-        run: pyinstaller --onefile serial_to_csv.py
+        run: pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
