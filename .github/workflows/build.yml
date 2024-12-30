@@ -72,7 +72,7 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: dist/serial_to_csv.exe  # Path to the Windows executable
         asset_name: serial_to_csv-windows.exe  # Name of the asset
-        asset_content_type: application/octet-stream
+        asset_content_type: application/octet-stream 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
