@@ -54,7 +54,7 @@ jobs:
         draft: false
         prerelease: false
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload Linux executable to GitHub Release
       uses: actions/upload-release-asset@v1
@@ -64,8 +64,7 @@ jobs:
         asset_name: serial_to_csv-linux  # Name of the asset
         asset_content_type: application/octet-stream
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload Windows executable to GitHub Release
       uses: actions/upload-release-asset@v1
@@ -75,7 +74,7 @@ jobs:
         asset_name: serial_to_csv-windows.exe  # Name of the asset
         asset_content_type: application/octet-stream
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload macOS executable to GitHub Release
       uses: actions/upload-release-asset@v1
@@ -85,5 +84,5 @@ jobs:
         asset_name: serial_to_csv-macos.app  # Name of the asset
         asset_content_type: application/octet-stream
        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
