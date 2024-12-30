@@ -59,6 +59,9 @@ jobs:
     - name: Check if executable exists
       run: ls -l dist/
 
+    - name: Set permissions
+      run: chmod +x dist/*
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
