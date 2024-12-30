@@ -41,11 +41,11 @@ jobs:
     - name: Build executable
       run: |
         if [ "${{ matrix.os }}" == "macos-latest" ]; then
-          pyinstaller --onefile --arch ${{ matrix.architecture }} your_script.py
+          pyinstaller --onefile --arch ${{ matrix.architecture }} --additional-hooks-dir=. serial_to_csv.py
         elif [ "${{ matrix.os }}" == "windows-latest" ]; then
-          pyinstaller --onefile your_script.py
+          pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
         else
-          pyinstaller --onefile your_script.py
+          pyinstaller --onefile --additional-hooks-dir=. serial_to_csv.py
         fi
         
     - name: Check if executable exists
