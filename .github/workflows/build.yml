@@ -156,7 +156,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./linux/ubuntu-latest-x86_64.zip  # Path to the Linux executable
-        asset_name: serial_to_csv-linux  # Name of the asset
+        asset_name: serial_to_csv-linux.zip  # Name of the asset
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -166,7 +166,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./windows/windows-latest-x86_64.zip  # Path to the Windows executable
-        asset_name: serial_to_csv-windows.exe  # Name of the asset
+        asset_name: serial_to_csv-windows.zip  # Name of the asset
         asset_content_type: application/octet-stream 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -176,7 +176,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./macos-x86_64/macos-latest-x86_64.zip  # Path to the macOS executable
-        asset_name: serial_to_csv-macos-x86_64  # Name of the asset
+        asset_name: serial_to_csv-macos-x86_64.zip  # Name of the asset
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -186,7 +186,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./macos-arm64/macos-latest-arm64.zip  # Path to the macOS executable
-        asset_name: serial_to_csv-macos-arm64  # Name of the asset
+        asset_name: serial_to_csv-macos-arm64.zip  # Name of the asset
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
