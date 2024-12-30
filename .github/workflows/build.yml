@@ -49,7 +49,7 @@ jobs:
       if: matrix.os == 'macos-latest'
       uses: actions/upload-artifact@v3
       with:
-        name: mac-executable
+        name: macos-executable
         path: dist/serial_to_csv
 
     - name: Upload Linux executable to GitHub Release
