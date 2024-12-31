@@ -80,8 +80,9 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 if __name__ == "__main__":   
-
-    print("Εφαρμογή αυτόματης καταγραφής σε αρχείο (.csv) μετρήσεων από αισθητήρες v.1.0.0")
+    
+    print("\nΕφαρμογή αυτόματης καταγραφής σε αρχείο (.csv) μετρήσεων από αισθητήρες v.1.0.0\n")
+    
 
     # Port selection
     port = pick_port()
